@@ -5,6 +5,46 @@ class User:
         self.address = address
         self.phone = phone
 
+class Customer(User):
+    def __init__(self, name, email, address, phone):
+        super().__init__(name, email, address, phone)
+        self.card=None
+
+    def view_menu(self,restaurant):
+        restaurant.menu.view_items()
+
+
+    def add_item(self,restaurant,item_name):
+        item = restaurant.menu.find_item(item_name)
+        if item:
+            pass
+        else:
+            print("Item not Found")
+
+    def view_card(self):
+        print("********* View Card *******")
+        print("name\tprice\tquantity")
+
+
+class Order:
+    def __init__(self):
+        self.items={}
+
+    def add_item(self,item,quantity):
+            if item in self.items:
+                self.items[item] += item.quantity
+            else:
+                self.items[item]=item.quantity
+
+    def remove_item(self,item):
+         if item in self.items:
+            del self.items[item] 
+
+    def total_price(self):
+        return sum(item.price * quantity for item,quantity in self.items.items())
+
+    def clear(self):
+        self.items={}
 
 class Employee(User):
     def __init__(self, name, email, address, phone, age, designation, salary):
@@ -34,7 +74,7 @@ class RestaurantManagement:
     def __init__(self,name):
         self.name= name
         self.employees=[]
-        self.menu = FoodItem()
+        self.menu = Menu()
 
     def add_employee(self,employee):
         self.employees.append(employee)
@@ -78,8 +118,16 @@ class FoodItem:
         self.price= price
         self.quantity= quantity
 
+admin1= Admin("A","a@gmail.com","Dhaka",3928456)
+r1=RestaurantManagement("R1")
 
 f1=FoodItem("pizza",30,20)
-m1=Menu()
-m1.add_item(f1);  
-m1.view_items()           
+f2=FoodItem("Burger",20,40)
+f3=FoodItem("Cock",20,60)
+
+admin1.add_new_item(r1,f1)
+admin1.add_new_item(r1,f2)
+admin1.add_new_item(r1,f3)
+
+c1=Customer("B","b@gmail.com","Dhaka",3837)
+c1.view_menu(r1)           
