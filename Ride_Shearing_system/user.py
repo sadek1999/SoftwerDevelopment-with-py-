@@ -48,4 +48,8 @@ class Driver(User):
        print(f"Rider : {self.name} ")
 
     def ride_request(self,destination):
-        pass   
+        pass 
+
+    def accept_ride(self,ride):
+        ride.set_driver(self)
+     
